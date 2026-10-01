@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PLACEHOLDER — Product Pitch</title>
+<!--
+  ============================================================================
+  PITCH DECK SCAFFOLD  (self-contained: no build, no external JS/CSS)
+  ----------------------------------------------------------------------------
+  HOW TO USE
+  1. Replace the design tokens in :root below. DO NOT ship the placeholder look —
+     choose type + color that fit THIS product's character (see deck-craft.md).
+     A web-font <link> is the only acceptable external dependency; always keep a
+     real system-font fallback so it degrades offline.
+  2. Replace the example <section class="slide"> blocks with your slides. One
+     example of every reusable slide type is included below — keep what you need,
+     delete the rest, duplicate as needed.
+  3. Update <title> and the deck label in #chrome.
+  Nav, progress bar, counter, and deep-link hash are already wired — leave the
+  <script> at the bottom alone unless you know why you're changing it.
+  ============================================================================
+-->
+<style>
+  /* ---- DESIGN TOKENS — REPLACE THESE (placeholder look; redesign per product) ---- */
+  :root{
+    --paper:#f4f1ea;          /* background */
+    --paper-2:#ebe6da;        /* card / elevated surface */
+    --ink:#1b1a17;            /* primary text */
+    --ink-soft:#4a453c;       /* secondary text */
+    --slate:#7c7365;          /* muted / captions */
+    --accent:#c2410c;         /* ONE confident accent — change this */
+    --accent-deep:#9a330a;
+    --go:#2f6a49;             /* positive / "safe" tone (optional) */
+    --line:rgba(27,26,23,.16);
+    --line-soft:rgba(27,26,23,.08);
+    /* Pair a display face with character + a clean body face. Replace both. */
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  /* ---- END TOKENS ---- */
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+
+  #bar{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;z-index:50;transition:width .35s cubic-bezier(.4,0,.1,1)}
+  #chrome{position:fixed;inset:auto 0 0 0;display:flex;justify-content:space-between;align-items:center;
+    padding:18px clamp(24px,5vw,72px);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);z-index:40;pointer-events:none}
+  #chrome .dot{color:var(--accent);font-weight:600}
+  #hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--slate);opacity:.7;z-index:40;transition:opacity .6s;pointer-events:none}
+
+  .slide{position:fixed;inset:0;display:none;flex-direction:column;justify-content:center;
+    padding:clamp(40px,7vh,90px) clamp(28px,7vw,120px) clamp(70px,10vh,120px);opacity:0;transform:translateY(14px)}
+  .slide.active{display:flex;animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .wrap{width:100%;max-width:1140px;margin:0 auto}
+
+  .eyebrow{font-size:clamp(11px,1.3vw,13px);letter-spacing:.24em;text-transform:uppercase;color:var(--accent);
+    font-weight:600;margin-bottom:clamp(18px,3.2vh,34px);display:flex;align-items:center;gap:14px}
+  .eyebrow::before{content:"";width:34px;height:2px;background:var(--accent);display:inline-block}
+  .eyebrow .n{color:var(--slate);letter-spacing:.2em}
+
+  h1{font-family:var(--serif);font-weight:600;line-height:1;letter-spacing:-.02em}
+  .display{font-size:clamp(38px,7.4vw,104px)}
+  .big{font-size:clamp(32px,5.6vw,74px);line-height:1.02;letter-spacing:-.015em;font-family:var(--serif);font-weight:500}
+  .mid{font-size:clamp(26px,3.8vw,50px);line-height:1.08;letter-spacing:-.01em;font-family:var(--serif);font-weight:500}
+  .lead{font-size:clamp(17px,2vw,25px);line-height:1.5;color:var(--ink-soft);max-width:60ch}
+  .lead.tight{max-width:44ch}
+  em,.em{font-style:italic;color:var(--accent-deep)}
+  strong{font-weight:600;color:var(--ink)}
+  .accent{color:var(--accent)}
+  .mt-s{margin-top:clamp(14px,2.2vh,22px)} .mt-m{margin-top:clamp(20px,3.4vh,40px)} .mt-l{margin-top:clamp(30px,5vh,60px)}
+  .note{font-size:clamp(13px,1.3vw,15px);color:var(--slate);line-height:1.5;max-width:66ch}
+
+  /* two-pole */
+  .gap{display:flex;align-items:center;gap:clamp(18px,4vw,60px);flex-wrap:wrap}
+  .gap .pole{font-family:var(--serif);font-size:clamp(22px,3vw,40px);line-height:1.05;flex:1;min-width:220px}
+  .gap .pole small{display:block;font-family:var(--sans);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .gap .arrow{font-size:clamp(30px,5vw,64px);color:var(--accent);font-family:var(--serif)}
+  .gap .pole.right{color:var(--accent-deep)}
+
+  /* card grid */
+  .grid{display:grid;gap:clamp(12px,1.6vw,20px)}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:760px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--paper-2);border:1px solid var(--line-soft);border-radius:14px;padding:clamp(18px,2.2vw,26px);position:relative;overflow:hidden}
+  .card .job{font-family:var(--serif);font-style:italic;font-size:clamp(17px,1.9vw,22px);color:var(--accent-deep);margin-bottom:10px;line-height:1.15}
+  .card p{font-size:clamp(14px,1.35vw,16.5px);line-height:1.5;color:var(--ink-soft)}
+  .card .tick{position:absolute;top:16px;right:18px;color:var(--go);font-weight:700;font-size:15px}
+
+  /* labeled rows */
+  .rows{display:flex;flex-direction:column;gap:clamp(10px,1.6vh,18px)}
+  .row{display:grid;grid-template-columns:minmax(120px,220px) 1fr;gap:clamp(14px,2.4vw,34px);
+    padding-bottom:clamp(10px,1.6vh,18px);border-bottom:1px solid var(--line-soft);align-items:baseline}
+  .row:last-child{border-bottom:0}
+  .row .k{font-family:var(--serif);font-size:clamp(18px,2vw,26px);font-weight:500;line-height:1.05}
+  .row .k small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;font-weight:600}
+  .row .v{font-size:clamp(14px,1.5vw,18px);line-height:1.45;color:var(--ink-soft)}
+  @media(max-width:640px){.row{grid-template-columns:1fr}}
+
+  /* numbered advantages */
+  .adv{display:flex;gap:clamp(16px,2vw,28px);align-items:flex-start;padding:clamp(12px,1.8vh,20px) 0;border-bottom:1px solid var(--line-soft)}
+  .adv:last-child{border-bottom:0}
+  .adv .num{font-family:var(--serif);font-size:clamp(30px,4vw,56px);line-height:.9;color:var(--accent);min-width:1.4em}
+  .adv h3{font-family:var(--serif);font-weight:600;font-size:clamp(19px,2.1vw,26px);line-height:1.1;margin-bottom:6px}
+  .adv p{font-size:clamp(14px,1.4vw,17px);line-height:1.48;color:var(--ink-soft);max-width:70ch}
+
+  /* back-of-box */
+  .box{border:2px solid var(--ink);border-radius:16px;padding:clamp(26px,3.6vw,48px);background:var(--paper-2)}
+  .box .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:18px}
+  .box .hl{font-family:var(--serif);font-weight:600;font-size:clamp(24px,3.4vw,44px);line-height:1.04;letter-spacing:-.01em;margin-bottom:18px}
+  .box p{font-size:clamp(15px,1.7vw,20px);line-height:1.5;color:var(--ink-soft);max-width:64ch}
+  .box .stamp{margin-top:20px;font-family:var(--serif);font-style:italic;color:var(--accent-deep);font-size:clamp(15px,1.7vw,20px)}
+
+  /* rings (market) */
+  .rings{display:flex;flex-direction:column;gap:12px}
+  .ring{display:grid;grid-template-columns:120px 1fr auto;gap:20px;align-items:center;padding:14px 20px;border-radius:12px;background:var(--paper-2);border:1px solid var(--line-soft)}
+  .ring .lbl{font-family:var(--serif);font-style:italic;color:var(--accent-deep);font-size:clamp(15px,1.6vw,19px)}
+  .ring .desc{font-size:clamp(13px,1.4vw,16px);color:var(--ink-soft);line-height:1.4}
+  .ring .sz{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+  @media(max-width:640px){.ring{grid-template-columns:1fr;gap:6px}}
+
+  /* honest-gap tag */
+  .tag{display:inline-block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:4px 10px;border-radius:100px;vertical-align:middle}
+  .tag.data{background:rgba(194,65,12,.12);color:var(--accent-deep);border:1px solid rgba(194,65,12,.3)}
+  .tag.go{background:rgba(47,106,73,.12);color:var(--go);border:1px solid rgba(47,106,73,.3)}
+
+  /* finale */
+  .finale .promise{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5.4vw,70px);line-height:1.02;letter-spacing:-.015em}
+  .finale .promise .accent{display:block}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<!-- ========== EXAMPLE SLIDES — replace all of these ========== -->
+
+<!-- TITLE -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span>PRODUCT NAME</span><span class="n">Pitch</span></div>
+    <h1 class="display">The promise,<br>in one line.</h1>
+    <p class="lead mt-l">The back-of-the-box sentence — a stake or a promise, not a category. <strong>Make a stranger care.</strong></p>
+    <p class="note mt-l">Presenter · Team · Date</p>
+  </div>
+</section>
+
+<!-- STATEMENT (why listen) -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">01</span><span>Why am I listening</span></div>
+    <h1 class="big">The problem, stated<br>as a <span class="accent">punch.</span></h1>
+    <p class="lead mt-l tight">One supporting line that sets the stakes.</p>
+  </div>
+</section>
+
+<!-- TWO-POLE (the gap) -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">02</span><span>The gap</span></div>
+    <div class="gap">
+      <div class="pole"><small>What they have</small>The current, painful state.</div>
+      <div class="arrow">→</div>
+      <div class="pole right"><small>What they need</small>The state they can't reach on their own.</div>
+    </div>
+    <p class="lead mt-l">One line on why crossing that gap is hard.</p>
+  </div>
+</section>
+
+<!-- CARD GRID (jobs / failure modes) -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">03</span><span>The product · jobs, not features</span></div>
+    <h1 class="mid">What it does for you.</h1>
+    <div class="grid g3 mt-m">
+      <div class="card"><div class="job">"A job to be done."</div><p>The benefit the customer gets — an outcome, not a feature.</p></div>
+      <div class="card"><div class="job">"Another job."</div><p>Benefit, plainly stated.</p></div>
+      <div class="card"><div class="job">"A third job."</div><p>Benefit, plainly stated.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACK-OF-BOX (what is it) -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">04</span><span>What is it</span></div>
+    <div class="box">
+      <div class="kicker">PRODUCT NAME</div>
+      <div class="hl">The packaging headline — read this aloud.</div>
+      <p>Two or three sentences a buyer would read on the box: what it is and what it gives you, in plain language.</p>
+      <div class="stamp">The tagline that lands.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LABELED ROWS (two buyers / why-now / competition) -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">05</span><span>The customer · two buyers</span></div>
+    <h1 class="mid">Same product. Two buyers.</h1>
+    <div class="rows mt-l">
+      <div class="row"><div class="k"><small>The user</small>Who uses it</div><div class="v">What they get — e.g. speed, autonomy.</div></div>
+      <div class="row"><div class="k"><small>The buyer</small>Who pays / is accountable</div><div class="v">What they get — e.g. proof, control.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RINGS (beachhead + market) -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">06</span><span>Market · start sharp, expand</span></div>
+    <h1 class="mid">Start at the sharpest instance.</h1>
+    <div class="rings mt-m">
+      <div class="ring"><span class="lbl">Beachhead</span><span class="desc">The most acute case, fast feedback loop.</span><span class="sz">needs data</span></div>
+      <div class="ring"><span class="lbl">Ring 2</span><span class="desc">Adjacent expansion — same motion.</span><span class="sz">needs data</span></div>
+      <div class="ring"><span class="lbl">Ring 3</span><span class="desc">The broader market.</span><span class="sz">needs data</span></div>
+    </div>
+    <p class="note mt-m"><span class="tag data">market trumps all</span> &nbsp;Sizing is the highest-value thing to go learn.</p>
+  </div>
+</section>
+
+<!-- NUMBERED (why win) -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">07</span><span>Why will you win</span></div>
+    <h1 class="mid">Three sources of advantage.</h1>
+    <div class="mt-m">
+      <div class="adv"><div class="num">1</div><div><h3>A repeatable method / know-how</h3><p>Something hard-won that transfers.</p></div></div>
+      <div class="adv"><div class="num">2</div><div><h3>A structural position</h3><p>A place competitors can't easily occupy.</p></div></div>
+      <div class="adv"><div class="num">3</div><div><h3>Distribution</h3><p>You arrive where the work already happens.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT (emotional close) -->
+<section class="slide">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">08</span><span>Why anyone cares</span></div>
+    <h1 class="big">The human reason<br>this should <span class="accent">exist.</span></h1>
+    <p class="lead mt-l">The line the room remembers.</p>
+  </div>
+</section>
+
+<!-- FINALE (aspiration) -->
+<section class="slide">
+  <div class="wrap finale">
+    <div class="eyebrow"><span class="n">09</span><span>The aspiration</span></div>
+    <p class="promise">The bold, concrete future<span class="accent">once this wins.</span></p>
+    <p class="note mt-l">Team: who's behind it. <span class="tag data">needs data</span> roster &amp; roles.</p>
+  </div>
+</section>
+
+<!-- ========== END EXAMPLE SLIDES ========== -->
+
+<div id="chrome">
+  <span>PRODUCT NAME <span class="dot">·</span> Pitch</span>
+  <span><span id="cur">01</span> / <span id="tot">1</span></span>
+</div>
+<div id="hint">← → or space to navigate</div>
+
+<script>
+  // Navigation, progress, counter, deep-link hash. Leave as-is unless intentional.
+  const slides=[...document.querySelectorAll('.slide')];
+  const bar=document.getElementById('bar');
+  const cur=document.getElementById('cur');
+  const hint=document.getElementById('hint');
+  document.getElementById('tot').textContent=String(slides.length).padStart(2,'0');
+  let i=0;
+  const pad=n=>String(n).padStart(2,'0');
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    bar.style.width=((i+1)/slides.length*100)+'%';
+    cur.textContent=pad(i+1);
+    if(location.hash!=='#'+(i+1)) history.replaceState(null,'','#'+(i+1));
+  }
+  const next=()=>show(i+1), prev=()=>show(i-1);
+  window.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();next();}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();prev();}
+    else if(e.key==='Home'){show(0);} else if(e.key==='End'){show(slides.length-1);}
+  });
+  window.addEventListener('click',e=>{ (e.clientX < innerWidth*0.32) ? prev() : next(); });
+  setTimeout(()=>hint.style.opacity='0',4200);
+  window.addEventListener('keydown',()=>hint.style.opacity='0',{once:true});
+  const start=parseInt((location.hash||'').slice(1),10);
+  show(Number.isFinite(start)&&start>0?start-1:0);
+</script>
+</body>
+</html>

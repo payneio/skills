@@ -1,0 +1,117 @@
+{
+  "skill_name": "pitch-deck",
+  "evals": [
+    {
+      "id": 0,
+      "name": "amplifier-online",
+      "prompt": "I've got a one-paragraph product vision doc for a product called Amplifier Online (the file is attached). Turn it into a pitch deck I can walk my leadership through.",
+      "expected_output": "A structured pitch markdown doc following the spine, and a self-contained HTML slide deck. Faithful to the vision doc, gaps flagged as [needs data], vision kept general with scope pushed to roadmap.",
+      "files": [
+        "inputs/amplifier-online-vision.md"
+      ],
+      "assertions": [
+        {
+          "id": "produces-html-deck",
+          "text": "A self-contained HTML slide deck file (.html) is present in outputs.",
+          "auto": true
+        },
+        {
+          "id": "deck-self-contained",
+          "text": "The deck HTML has no local/relative script or stylesheet dependencies (a remote web-font <link> is allowed); it opens standalone.",
+          "auto": true
+        },
+        {
+          "id": "deck-keyboard-nav",
+          "text": "The deck supports keyboard navigation (a keydown handler referencing ArrowRight/ArrowLeft).",
+          "auto": true
+        },
+        {
+          "id": "produces-pitch-doc",
+          "text": "A separate markdown pitch document (not just the deck) is present in outputs.",
+          "auto": true
+        },
+        {
+          "id": "correct-product",
+          "text": "The deck is about Amplifier Online and does NOT leak content from Amplifier Agent.",
+          "auto": true
+        },
+        {
+          "id": "covers-spine",
+          "text": "The deck covers the core pitch beats: a problem/why-care, the product as jobs/benefits, the customer, why-win or competition, and an ask/aspiration close.",
+          "auto": false
+        },
+        {
+          "id": "flags-gaps-honestly",
+          "text": "Missing specifics (market size, revenue model, team, personal 'why') are flagged as [needs data] or similar, NOT fabricated (no invented market numbers, metrics, or logos).",
+          "auto": false
+        },
+        {
+          "id": "title-is-promise",
+          "text": "The opening/title slide leads with a promise or stake, not a bare product-category label.",
+          "auto": false
+        },
+        {
+          "id": "vision-altitude",
+          "text": "The top-level story stays general/human; scope and implementation detail are pushed to a roadmap/appendix rather than opening the pitch.",
+          "auto": false
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "amplifier-agent",
+      "prompt": "We have a rough vision writeup for our product Amplifier Agent (attached) that nobody on the team is happy with. Can you make me a pitch deck out of it?",
+      "expected_output": "A structured pitch markdown doc and a self-contained HTML deck for Amplifier Agent (NOT Amplifier Online). Extracts a real problem/customer/why-win from a vague essay, flags missing pieces ([needs data]), distinctive design.",
+      "files": [
+        "inputs/amplifier-agent-vision.md"
+      ],
+      "assertions": [
+        {
+          "id": "produces-html-deck",
+          "text": "A self-contained HTML slide deck file (.html) is present in outputs.",
+          "auto": true
+        },
+        {
+          "id": "deck-self-contained",
+          "text": "The deck HTML has no local/relative script or stylesheet dependencies (a remote web-font <link> is allowed); it opens standalone.",
+          "auto": true
+        },
+        {
+          "id": "deck-keyboard-nav",
+          "text": "The deck supports keyboard navigation (a keydown handler referencing ArrowRight/ArrowLeft).",
+          "auto": true
+        },
+        {
+          "id": "produces-pitch-doc",
+          "text": "A separate markdown pitch document (not just the deck) is present in outputs.",
+          "auto": true
+        },
+        {
+          "id": "correct-product",
+          "text": "The deck is about Amplifier Agent and does NOT leak content from Amplifier Online.",
+          "auto": true
+        },
+        {
+          "id": "covers-spine",
+          "text": "The deck covers the core pitch beats: a problem/why-care, the product as jobs/benefits, the customer, why-win or competition, and an ask/aspiration close.",
+          "auto": false
+        },
+        {
+          "id": "flags-gaps-honestly",
+          "text": "Missing specifics (market size, revenue model, team, personal 'why') are flagged as [needs data] or similar, NOT fabricated (no invented market numbers, metrics, or logos).",
+          "auto": false
+        },
+        {
+          "id": "title-is-promise",
+          "text": "The opening/title slide leads with a promise or stake, not a bare product-category label.",
+          "auto": false
+        },
+        {
+          "id": "vision-altitude",
+          "text": "The top-level story stays general/human; scope and implementation detail are pushed to a roadmap/appendix rather than opening the pitch.",
+          "auto": false
+        }
+      ]
+    }
+  ]
+}

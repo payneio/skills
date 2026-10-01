@@ -1,0 +1,26 @@
+{
+  "skill_name": "walk-a-scenario",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "inbox-triage-budgeted",
+      "prompt": "walk S2 for me — emptying the inbox. twenty unfiled things on a sunday. is that actually workable in our app or is it painful? i want to know what to fix",
+      "expected_output": "A walkthrough report: budget read as 'Sunday, laptop, twenty unfiled things', a numbered trace through the real inbox surfaces, per-item cost in decisions/navigations, six scored dimensions, each *Must work* clause answered, and ranked fixes tagged by exit.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "eval_name": "dose-logging-budgeted",
+      "prompt": "can you check S26 against what we've actually built — the 7am dose one, one hand in the kitchen. i want a real assessment not vibes",
+      "expected_output": "A walkthrough report: budget read as 'Kitchen, kids, phone in one hand', trace through the dose-logging path, gesture count against the scenario's 'one gesture' clause, six scored dimensions, and ranked fixes.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "eval_name": "recurrence-no-budget",
+      "prompt": "S34 — clicking one instance of a weekly thing and getting to the series behind it. does that hold up? give me the fixes ranked",
+      "expected_output": "A walkthrough report that correctly reports Cost as unscoreable (S34 states no budget) and emits a scenario amendment rather than inventing a budget, plus a trace through the calendar occurrence/rule surfaces, six scored dimensions, and ranked fixes.",
+      "files": []
+    }
+  ]
+}
